@@ -20,7 +20,7 @@ for VARIANT in VARIANTS:
     # Množiny
     C = list(range(1, CUSTOMERS + 1))
     P = list(range(CUSTOMERS + 1, CUSTOMERS + 3))
-    mu    = {c: 0 for c in C}
+    mu = {c: int(nodes[c][3]) for c in C}
     lam   = {c: 1 for c in C}
     kappa = {(c, p): 0 for c in C for p in P}
     gam_p = {p: GAMMA_P for p in P}
@@ -136,7 +136,7 @@ for VARIANT in VARIANTS:
         m.addConstrs((gp.quicksum(y[(k,i,j)] for i,j in A.select('*', c)) <= lam[c]
                       for k in K for c in C))
         # (16)
-        m.addConstrs((theta[(k,c)] <= mu[c]
+        m.addConstrs((theta[(k,c)] <= 1 - mu[c]
                       for k in K for c in C))
         # (17)
         m.addConstrs((phi[(k,c)] == gp.quicksum(z[(k,c,p)] for p in P)
